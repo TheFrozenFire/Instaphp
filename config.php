@@ -66,9 +66,11 @@ namespace Instaphp {
          * Singleton method since the SimpleXMLElement class is essentially "sealed"
          * @return Config An instance of the Config object
          */
-        public static function Instance()
+        public static function Instance($file = null)
         {
-            if (static::$file == null)
+            if (is_string($file))
+                static::$file = realpath($file);
+            elseif (static::$file == null)
                 static::$file = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'config.xml';
 
             if (!file_exists(static::$file)) {
